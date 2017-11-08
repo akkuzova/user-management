@@ -69,7 +69,7 @@ class User
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEnti ty="Group", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
      * @ORM\JoinTable(name="users_groups")
      */
     private $groups;

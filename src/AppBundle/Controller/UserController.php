@@ -24,9 +24,10 @@ class UserController extends FOSRestController
     /**
      * @Rest\Get("/users/{id}", name="get_user")
      */
-    public function getUserAction()
+    public function getUserAction($id)
     {
-
+        $user = $this->getDoctrine()->getRepository(User::class)->findBy(['id'=>$id]);
+        return View::create($user, Response::HTTP_OK);
     }
 
     /**
@@ -49,13 +50,13 @@ class UserController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        $response = new Response("User created", 201);
-        $response->headers->set('Location',
-            $this->generateUrl(
+
+        return View::create(null,
+            Response::HTTP_CREATED,
+            ['Location' => $this->generateUrl(
                 'get_user', array('id' => $user->getId()),
-                true
-            )
+                true)
+            ]
         );
-        return $response;
     }
 }
