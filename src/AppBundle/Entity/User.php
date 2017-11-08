@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -25,12 +26,16 @@ class User
     /**
      * @var string
      *
+     * @Assert\Email
+     *
      * @ORM\Column(type="string", length=256)
      */
     private $email;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank
      *
      * @ORM\Column(type="string", length=256)
      */
@@ -39,6 +44,8 @@ class User
     /**
      * @var string
      *
+     * @Assert\NotBlank
+     *
      * @ORM\Column(type="string", length=256)
      */
     private $lastName;
@@ -46,27 +53,30 @@ class User
     /**
      * @var string
      *
+     * @Assert\NotBlank
+     *
      * @ORM\Column(type="string", nullable=false, options={"default":"active"})
      */
     private $state;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="datetime")
      */
     private $creationDate;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+     * @ORM\ManyToMany(targetEnti ty="Group", inversedBy="users")
      * @ORM\JoinTable(name="users_groups")
      */
     private $groups;
 
     public function __construct()
     {
+        $this->creationDate = new \DateTime();
         $this->groups = new ArrayCollection();
     }
 
