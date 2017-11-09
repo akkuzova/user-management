@@ -9,13 +9,15 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class GroupController extends FOSRestController
 {
     /**
+     * @ApiDoc
      * @Rest\Get("/groups")
      */
     public function getGroupsAction()
@@ -30,6 +32,7 @@ class GroupController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Get("/groups/{id}", name="get_group")
      * @ParamConverter("group", class="AppBundle:Group")
      * @param Group $group
@@ -46,6 +49,7 @@ class GroupController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Post("/groups")
      * @param Request $request
      * @return View
@@ -74,6 +78,7 @@ class GroupController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Put("/groups/{id}")
      * @ParamConverter("group", class="AppBundle:Group")
      * @param Group $group

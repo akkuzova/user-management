@@ -72,10 +72,4 @@ fos_rest:
         formats:
             json: true
 
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
+nelmio_api_doc: ~

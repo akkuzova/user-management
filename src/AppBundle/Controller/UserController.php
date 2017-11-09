@@ -11,11 +11,14 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class UserController extends FOSRestController
 {
     /**
+     * @ApiDoc
      * @Rest\Get("/users")
+     * @return View
      */
     public function getUsersAction()
     {
@@ -29,8 +32,11 @@ class UserController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Get("/users/{id}", name="get_user")
      * @ParamConverter("user", class="AppBundle:User")
+     * @param User $user
+     * @return View
      */
     public function getUserAction(User $user)
     {
@@ -42,7 +48,10 @@ class UserController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Post("/users")
+     * @param Request $request
+     * @return View
      */
     public function createUserAction(Request $request)
     {
@@ -53,7 +62,7 @@ class UserController extends FOSRestController
         $userForm->submit($request->request->all());
 
         if (!$userForm->isValid()) {
-            return View::create($userForm, 400);
+            return $this->view($userForm, 400);
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -68,8 +77,12 @@ class UserController extends FOSRestController
     }
 
     /**
+     * @ApiDoc
      * @Rest\Put("/users/{id}")
      * @ParamConverter("user", class="AppBundle:User")
+     * @param User $user
+     * @param Request $request
+     * @return View
      */
     public function updateUserAction(User $user, Request $request)
     {
