@@ -23,10 +23,7 @@ class UserController extends FOSRestController
     public function getUsersAction()
     {
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-        $view = $this->view($users);
-        $context = new Context();
-        $context->setGroups(["list"]);
-        $view->setContext($context);
+        $view = $this->view($users)->setContext((new Context())->setGroups(["list"]));
 
         return $view;
     }
@@ -40,11 +37,7 @@ class UserController extends FOSRestController
      */
     public function getUserAction(User $user)
     {
-        $view = $this->view($user);
-        $context = new Context();
-        $context->setGroups(["details"]);
-        $view->setContext($context);
-        return $view;
+        return $this->view($user)->setContext((new Context())->setGroups(["details"]));
     }
 
     /**
@@ -69,11 +62,14 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-        return $this->view($user, Response::HTTP_CREATED,
+        $view = $this->view($user, Response::HTTP_CREATED,
             [
                 'Location' => $this->generateUrl('get_user', array('id' => $user->getId()), true)
             ]
         );
+        $view->setContext((new Context())->setGroups(["details"]));
+
+        return $view;
     }
 
     /**
@@ -98,10 +94,13 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-        return $this->view($user, Response::HTTP_OK,
+        $view = $this->view($user, Response::HTTP_OK,
             [
                 'Location' => $this->generateUrl('get_user', array('id' => $user->getId()), true)
             ]
         );
+        $view->setContext((new Context())->setGroups(["details"]));
+
+        return $view;
     }
 }
