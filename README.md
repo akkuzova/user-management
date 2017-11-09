@@ -3,12 +3,12 @@ user-management
 
 **Подготовка проекта**
 
-git clone https://github.com/leckermaul/user-management.git 
-cd user-management/
-composer install
-docker-compose up
-bin/console doctrine:schema:update --force
-bin/console server:run
+    git clone https://github.com/leckermaul/user-management.git 
+    cd user-management/
+    composer install
+    docker-compose up
+    bin/console doctrine:schema:update --force
+    bin/console server:run
 
 
 **Ограничения**:
