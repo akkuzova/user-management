@@ -4,14 +4,20 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
+ * @ORM\Table(name="`group`")
+ * @ORM\Entity
+ * @Serializer\ExclusionPolicy("all")
  */
 class Group
 {
     /**
      * @var int
+     *
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -22,6 +28,9 @@ class Group
     /**
      * @var string
      *
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
+     *
      * @ORM\Column(type="string", length=256)
      */
     private $name;
@@ -29,7 +38,10 @@ class Group
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
+     * @Serializer\Groups({"groupDetails"})
+     * @Serializer\Expose
+     *
+     * @ORM\OneToMany(targetEntity="User", mappedBy="group")
      */
     private $users;
 
