@@ -4,10 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class User
 {
@@ -16,6 +17,9 @@ class User
 
     /**
      * @var int
+     *
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -26,7 +30,8 @@ class User
     /**
      * @var string
      *
-     * @Assert\Email
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
      * @ORM\Column(type="string", length=256)
      */
@@ -35,7 +40,8 @@ class User
     /**
      * @var string
      *
-     * @Assert\NotBlank
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
      * @ORM\Column(type="string", length=256)
      */
@@ -44,7 +50,8 @@ class User
     /**
      * @var string
      *
-     * @Assert\NotBlank
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
      * @ORM\Column(type="string", length=256)
      */
@@ -53,31 +60,37 @@ class User
     /**
      * @var string
      *
-     * @Assert\NotBlank
+     * @Serializer\Groups({"list", "details"})
+     * @Serializer\Expose
      *
-     * @ORM\Column(type="string", nullable=false, options={"default":"active"})
+     * @ORM\Column(type="string")
      */
     private $state;
 
     /**
      * @var \DateTime
      *
+     * @Serializer\Groups({"details"})
+     * @Serializer\Expose
+     *
      * @ORM\Column(type="datetime")
      */
     private $creationDate;
 
     /**
-     * @var ArrayCollection
+     * @var Group
      *
-     * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
-     * @ORM\JoinTable(name="users_groups")
+     * @Serializer\Groups({"details"})
+     * @Serializer\Expose
+     *
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="users")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
-    private $groups;
+    private $group;
 
     public function __construct()
     {
         $this->creationDate = new \DateTime();
-        $this->groups = new ArrayCollection();
     }
 
     /**
@@ -177,10 +190,15 @@ class User
     }
 
     /**
-     * @return ArrayCollection
+     * @return Group
      */
-    public function getGroups()
+    public function getGroup()
     {
-        return $this->groups;
+        return $this->group;
+    }
+
+    public function setGroup(Group $group)
+    {
+        $this->group = $group;
     }
 }
