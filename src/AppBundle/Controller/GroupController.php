@@ -33,23 +33,6 @@ class GroupController extends FOSRestController
 
     /**
      * @ApiDoc
-     * @Rest\Get("/groups/{id}", name="get_group")
-     * @ParamConverter("group", class="AppBundle:Group")
-     * @param Group $group
-     * @return View
-     */
-    public function getGroupAction(Group $group)
-    {
-        $view = $this->view($group);
-        $context = new Context();
-        $context->setGroups(["details", "groupDetails"]);
-        $view->setContext($context);
-
-        return $view;
-    }
-
-    /**
-     * @ApiDoc
      * @Rest\Post("/groups")
      * @param Request $request
      * @return View
@@ -70,11 +53,7 @@ class GroupController extends FOSRestController
         $em->persist($group);
         $em->flush();
 
-        return $this->view(null, Response::HTTP_CREATED,
-            [
-                'Location' => $this->generateUrl('get_group', array('id' => $group->getId()),true)
-            ]
-        );
+        return $this->view();
     }
 
     /**
