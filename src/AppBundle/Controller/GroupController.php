@@ -28,7 +28,23 @@ class GroupController extends FOSRestController
         $context->setGroups(["list"]);
         $view->setContext($context);
 
-        return $this->handleView($view);
+        return $view;
+    }
+
+    /**
+     * @ApiDoc
+     * @Rest\Get("/groups/{id}", name="get_group")
+     * @ParamConverter("group", class="AppBundle:Group")
+     * @param Group $group
+     * @return View
+     */
+    public function getGroupAction(Group $group)
+    {
+        $view = $this->view($group);
+        $context = new Context();
+        $context->setGroups(["details", "groupDetails"]);
+        $view->setContext($context);
+        return $view;
     }
 
     /**
@@ -46,14 +62,18 @@ class GroupController extends FOSRestController
         $groupForm->submit($request->request->all());
 
         if (!$groupForm->isValid()) {
-            return View::create($groupForm, 400);
+            return $this->view($groupForm, Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($group);
         $em->flush();
 
-        return $this->view();
+        return $this->view($group, Response::HTTP_CREATED,
+            [
+                'Location' => $this->generateUrl('get_group', array('id' => $group->getId()), true)
+            ]
+        );
     }
 
     /**
@@ -71,16 +91,16 @@ class GroupController extends FOSRestController
         $groupForm->submit($request->request->all());
 
         if (!$groupForm->isValid()) {
-            return View::create($groupForm, 400);
+            return$this->view($groupForm, Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($group);
         $em->flush();
 
-        return $this->view(null, Response::HTTP_OK,
+        return $this->view($group, Response::HTTP_OK,
             [
-                'Location' => $this->generateUrl('get_group', array('id' => $group->getId()),true)
+                'Location' => $this->generateUrl('get_group', array('id' => $group->getId()), true)
             ]
         );
     }

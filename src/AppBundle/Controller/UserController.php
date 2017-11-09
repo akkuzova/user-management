@@ -62,14 +62,14 @@ class UserController extends FOSRestController
         $userForm->submit($request->request->all());
 
         if (!$userForm->isValid()) {
-            return $this->view($userForm, 400);
+            return $this->view($userForm, Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-        return $this->view(null, Response::HTTP_CREATED,
+        return $this->view($user, Response::HTTP_CREATED,
             [
                 'Location' => $this->generateUrl('get_user', array('id' => $user->getId()), true)
             ]
@@ -91,14 +91,14 @@ class UserController extends FOSRestController
         $userForm->submit($request->request->all());
 
         if (!$userForm->isValid()) {
-            return View::create($userForm, 400);
+            return $this->view($userForm, Response::HTTP_BAD_REQUEST);
         }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-        return $this->view(null, Response::HTTP_OK,
+        return $this->view($user, Response::HTTP_OK,
             [
                 'Location' => $this->generateUrl('get_user', array('id' => $user->getId()), true)
             ]
