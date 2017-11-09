@@ -6,9 +6,8 @@ use AppBundle\Entity\Group;
 use AppBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Form\Transformer\EntityToIdObjectTransformer;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,7 +38,6 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => User::class,
             'csrf_protection' => false,
-            'allow_add' => true,
         ));
     }
 
@@ -48,9 +46,11 @@ class UserType extends AbstractType
         $groupTransformer = new EntityToIdObjectTransformer($this->om, Group::class);
 
         $builder
+            ->add('id', IntegerType::class, ['mapped' => false])
             ->add('email', EmailType::class, ['constraints' => [new Email()]])
             ->add('first_name', TextType::class, ['constraints' => [new NotBlank()]])
             ->add('last_name', TextType::class, ['constraints' => [new NotBlank()]])
+            ->add('creation_date', TextType::class, ['mapped' => false])
             ->add('state', ChoiceType::class, [
                     'choices' => [
                         1 => User::ACTIVE,
