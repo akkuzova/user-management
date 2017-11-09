@@ -16,7 +16,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class UserController extends FOSRestController
 {
     /**
-     * @ApiDoc
+     * @ApiDoc(description="List of all users")
      * @Rest\Get("/users")
      * @return View
      */
@@ -29,7 +29,7 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="User info")
      * @Rest\Get("/users/{id}", name="get_user")
      * @ParamConverter("user", class="AppBundle:User")
      * @param User $user
@@ -41,7 +41,7 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="Create a new user")
      * @Rest\Post("/users")
      * @param Request $request
      * @return View
@@ -73,7 +73,7 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="Change user info and group")
      * @Rest\Put("/users/{id}")
      * @ParamConverter("user", class="AppBundle:User")
      * @param User $user

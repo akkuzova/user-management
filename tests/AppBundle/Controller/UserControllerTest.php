@@ -2,7 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
-use AppBundle\DataFixtures\ORM\Fixtures;
+use AppBundle\DataFixtures\ORM\ControllerTestFixtures;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
@@ -10,7 +10,7 @@ class UserControllerTest extends WebTestCase
     public function setUp()
     {
         $this->loadFixtures(array(
-            Fixtures::class
+            ControllerTestFixtures::class
         ));
     }
 
@@ -37,12 +37,12 @@ class UserControllerTest extends WebTestCase
 
         $actual = json_decode($client->getResponse()->getContent(), true);
         $expected = [
-            "id" => 1,
-            "email" => "i.ivanov@mail.ru",
-            "first_name" => "Ivan",
-            "last_name" => "Ivanov",
-            "state" => "active",
-            "group" => [
+            'id' => 1,
+            'email' => 'i.ivanov@mail.ru',
+            'first_name' => 'Ivan',
+            'last_name' => 'Ivanov',
+            'state' => 'active',
+            'group' => [
                 'id' => 1,
                 'name' => 'admins'
             ]

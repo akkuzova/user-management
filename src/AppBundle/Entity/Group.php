@@ -5,10 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="`group`")
  * @ORM\Entity
+ * @UniqueEntity (fields="name", message="Group with this name already exists")
  * @Serializer\ExclusionPolicy("all")
  */
 class Group
@@ -31,7 +33,7 @@ class Group
      * @Serializer\Groups({"list", "details"})
      * @Serializer\Expose
      *
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=256, unique=true)
      */
     private $name;
 

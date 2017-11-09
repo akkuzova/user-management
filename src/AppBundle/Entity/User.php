@@ -5,9 +5,11 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity (fields="email", message="Email is already exists")
  * @Serializer\ExclusionPolicy("all")
  */
 class User
@@ -33,7 +35,7 @@ class User
      * @Serializer\Groups({"list", "details"})
      * @Serializer\Expose
      *
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=256, unique=true)
      */
     private $email;
 

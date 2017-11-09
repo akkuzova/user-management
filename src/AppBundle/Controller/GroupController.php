@@ -17,7 +17,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class GroupController extends FOSRestController
 {
     /**
-     * @ApiDoc
+     * @ApiDoc(description="List of all groups")
      * @Rest\Get("/groups")
      */
     public function getGroupsAction()
@@ -32,7 +32,7 @@ class GroupController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="Group info")
      * @Rest\Get("/groups/{id}", name="get_group")
      * @ParamConverter("group", class="AppBundle:Group")
      * @param Group $group
@@ -48,7 +48,7 @@ class GroupController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="Create a new group")
      * @Rest\Post("/groups")
      * @param Request $request
      * @return View
@@ -77,7 +77,7 @@ class GroupController extends FOSRestController
     }
 
     /**
-     * @ApiDoc
+     * @ApiDoc(description="Change name of group")
      * @Rest\Put("/groups/{id}")
      * @ParamConverter("group", class="AppBundle:Group")
      * @param Group $group

@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Id\AssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class Fixtures extends Fixture
+class ControllerTestFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
